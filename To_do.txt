@@ -1,0 +1,4 @@
+1. Melhorar o sistema de formação de combinações;
+2. Definir melhor o algoritmo para achar a melhor combinação sem repetição de pessoas;
+3. Estilizar o retorno para tornar mais dinâmico a tabela;
+4. Melhorar as formualas da tabela.
