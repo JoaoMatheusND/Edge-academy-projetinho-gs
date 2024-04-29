@@ -1,3 +1,5 @@
+//PLANILHA: https://docs.google.com/spreadsheets/d/1_qzai3ygFhlON_PeIyljvUfo5tFiTgeeuJQbxxOSnvQ/edit?usp=sharing
+
 class Data {
   constructor() {
     this.sheet = SpreadsheetApp.getActiveSpreadsheet();
