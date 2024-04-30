@@ -1,7 +1,7 @@
-//PLANILHA: https://docs.google.com/spreadsheets/d/1_qzai3ygFhlON_PeIyljvUfo5tFiTgeeuJQbxxOSnvQ/edit?usp=sharing
-
 class Data {
   constructor() {
+    this.idDados = "18VRmx99s6SExg4waL_voX3fOVjiV2PyxrKysEIr5Mj0";
+    this.sheetDados = SpreadsheetApp.openById(this.idDados);
     this.sheet = SpreadsheetApp.getActiveSpreadsheet();
     this.page = this.sheet.getSheetByName('Grupos');
     this.turma = this.page.getRange('A4').getValue();
@@ -37,20 +37,18 @@ class Data {
     switch (this.turma) {
       case 'Turma 1':
         rangeList.forEach((range) => {
-          var rangeData = this.sheet.getSheetByName('Resultado T1').getRange(range).getValues();
+          var rangeData = this.sheetDados.getSheetByName('Resultado T1').getRange(range).getValues();
           var cleanedData = this.limparMatriz(rangeData);
           this.week.push(cleanedData);
         });
-        this.students = this.sheet.getSheetByName('Segunda').getRange(this.getRangeStudentsList()).getValues();
         break;
 
       case 'Turma 2':
         rangeList.forEach((range) => {
-          var rangeData = this.sheet.getSheetByName('Resultado T2').getRange(range).getValues();
+          var rangeData = this.sheetDados.getSheetByName('Resultado T2').getRange(range).getValues();
           var cleanedData = this.limparMatriz(rangeData);
           this.week.push(cleanedData);
         });
-        this.students = this.sheet.getSheetByName('Segunda').getRange(this.getRangeStudentsList()).getValues();
         break;
 
       default:
@@ -60,7 +58,7 @@ class Data {
 
   getDados() {
     this.createWeek();
-    return [this.week, this.students];
+    return this.week;
   }
 
   getPage() {
@@ -81,7 +79,7 @@ function numberToDay(num) {
 
 function process() {
   var data = new Data();
-  var [weeks, students] = data.getDados();
+  var weeks = data.getDados();
 
   if (weeks === null) {
     data.getPage().getRange("A6:L").clearContent();
@@ -175,10 +173,13 @@ function combinationWithMaxUniqueElements(groups, maxSize) {
 function main() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet();
   var page = sheet.getSheetByName('Grupos');
-  page.getRange('A6:D').clearContent;
+  page.getRange('A6:D').clearContent();
+  page.getRange('A6:D').clearFormat();
 
   var dados = process();
   var maxGroup = 3;
+
+  Logger.log(dados);
 
   var collumIndex = 1;
 
@@ -187,8 +188,17 @@ function main() {
   Logger.log(chooseOne);
 
   for (var horario in chooseOne) {
-        page.getRange(6, collumIndex).setValue(horario);
-        page.getRange(7, collumIndex).setValue(chooseOne[horario].join('\n'));
+        var value = page.getRange(6, collumIndex);
+        value.setValue(horario);
+        value.setBorder(true, true, true, true, true, true);
+        value.setBackground("#a4c2f4");
+        value.setFontWeight("bold");
+        value.setFontSize(19);
+        value.setVerticalAlignment("top");
+
+        value = page.getRange(7, collumIndex);
+        value.setValue(chooseOne[horario].join('\n'));
+        value.setVerticalAlignment('top');
         collumIndex++;
   }
 
