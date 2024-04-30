@@ -1,6 +1,6 @@
 class Data {
   constructor() {
-    this.idDados = "18VRmx99s6SExg4waL_voX3fOVjiV2PyxrKysEIr5Mj0";
+    this.idDados = "ID_PLANILHA_DADOS";
     this.sheetDados = SpreadsheetApp.openById(this.idDados);
     this.sheet = SpreadsheetApp.getActiveSpreadsheet();
     this.page = this.sheet.getSheetByName('Grupos');
